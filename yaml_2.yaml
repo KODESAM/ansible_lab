@@ -1,0 +1,15 @@
+ > <
+Dictionary
+Given a dictionary with the property name and value apple. Add additional properties to the dictionary.
+
+
+Key/Property	Value
+name	apple
+color	red
+weight	90g
+
+--solution ---
+
+name: apple
+color: red
+weight: 90g
