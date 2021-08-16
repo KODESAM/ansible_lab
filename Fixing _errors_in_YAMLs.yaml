@@ -1,0 +1,39 @@
+Fixing errors in YAMLs
+Let us now try to fix some YAMLs that have not been developed well. Try to find the errors and fix the file.
+
+Note: We have disabled YAML Lint on the file. But if you can't figure out the issue and want it enabled, click on Show Hints button.
+
+
+Key/Property	Value
+name	john
+gender	male
+age	24
+address	
+Key/Property	Value
+city	edison
+state	new jersey
+country	united states
+
+----
+
+
+  employee:
+      name: john
+      gender: male
+    age: 24
+      address:
+          city: edison
+          state: 'new jersey'
+          country: 'united states'
+          
+ ---- solution------
+ 
+ 
+  employee:
+      name: john
+      gender: male
+      age: 24
+      address:
+          city: edison
+          state: 'new jersey'
+          country: 'united states'
