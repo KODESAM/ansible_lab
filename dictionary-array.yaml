@@ -1,0 +1,15 @@
+List of Dictionary
+We would like to record information about multiple employees. Convert the dictionary employee to an array employees.
+
+ employee:
+   name: john
+   gender: male
+   age: 24
+
+--solution----
+
+ employees:
+ -
+   name: john
+   gender: male
+   age: 24
