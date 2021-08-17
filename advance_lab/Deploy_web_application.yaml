@@ -16,6 +16,13 @@
       with_items:
       - mysql-server
       - mysql-client
+    - name: create MySQL configuration file
+      copy:
+        content: |
+          [client]
+          user=root
+          password="root"
+        dest: "/etc/.my.cnf"
    - name: Start Mysql Service
      service:
         name: mysql
