@@ -16,3 +16,8 @@
       with_items:
       - mysql-server
       - mysql-client
+   - name: Start Mysql Service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
