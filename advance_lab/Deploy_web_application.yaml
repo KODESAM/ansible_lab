@@ -17,11 +17,11 @@
       - mysql-server
       - mysql-client
    - name: Start Mysql Service
-      service:
+     service:
         name: mysql
         state: started
         enabled: yes
    - name: Create Application Database
-      mysql_db:
+     mysql_db:
         name: employee_db
         state: present
