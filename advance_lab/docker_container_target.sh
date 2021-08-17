@@ -1,6 +1,6 @@
 Run the container:
 
-docker run -d mmumshad/ubuntu-ssh-enabled
+docker run -d samdocker100/ubuntu-ssh-enabled
 
 Identify the Internal IP
 
