@@ -39,3 +39,7 @@
       with_items:
       - flask
       - flask-mysql 
+   - name: copy application code
+     copy:
+       src: app.py
+       dest: /opt/app.py
