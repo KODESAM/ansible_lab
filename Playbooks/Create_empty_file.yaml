@@ -1,0 +1,39 @@
+Create a playbook /home/thor/ansible/playbook.yml and add a task to create an empty file /tmp/file.txt on App Server 1.
+Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml
+
+thor@jump_host ~/ansible$ cat inventory 
+stapp01 ansible_host=172.16.238.10 ansible_connection=ssh ansible_user=tony ansible_ssh_pass=Ir0nM@n
+thor@jump_host ~/ansible$ cat playbook.yml 
+-
+    name: 'Create empty file'
+    hosts: stapp01
+    tasks:
+        -
+            name: 'create empty file'
+            command: touch /tmp/file.txt
+thor@jump_host ~/ansible$ ansible-playbook -i inventory playbook.yml
+
+PLAY [Create empty file] *************************************************************
+
+TASK [Gathering Facts] ***************************************************************
+ok: [stapp01]
+
+TASK [create empty file] *************************************************************
+[WARNING]: Consider using the file module with state=touch rather than running
+'touch'.  If you need to use command because file is insufficient you can add 'warn:
+false' to this command task or set 'command_warnings=False' in ansible.cfg to get rid
+of this message.
+changed: [stapp01]
+
+PLAY RECAP ***************************************************************************
+stapp01                    : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+thor@jump_host ~/ansible$ ssh tony@stapp01
+tony@stapp01's password: 
+Last login: Fri Sep  3 16:40:13 2021 from jump_host.devops-ansible-basic-v2_app_net
+[tony@stapp01 ~]$ ls -l /tmp/
+total 4
+-rw-rw-r-- 1 tony tony   0 Sep  3 16:40 file.txt
+-rwx------ 1 root root 836 Aug  1  2019 ks-script-rnBCJB
+-rw------- 1 root root   0 Aug  1  2019 yum.log
+[tony@stapp01 ~]$ 
