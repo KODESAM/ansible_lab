@@ -1,0 +1,33 @@
+Ansible. Perform the task as per details mentioned below:
+
+a. On jump host create an inventory file /home/thor/ansible/inventory and add all application servers as managed nodes.
+b. On jump host create a playbook /home/thor/ansible/playbook.yml to copy /usr/src/dba/index.html file to all application servers at location /opt/dba.
+Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml
+
+---
+thor@jump_host ~/ansible$ cat inventory 
+stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n ansible_user=tony
+stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@ ansible_user=steve
+stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n ansible_user=banner
+
+[webserver]
+stapp01
+stapp02
+stapp03
+
+---
+
+thor@jump_host ~/ansible$ cat playbook.yml 
+-   name: 'Create file from host to server'
+    hosts: webserver
+    become: yes
+    tasks:
+    - name: Copy file 
+      copy:
+        src: /usr/src/dba/index.html
+        dest: /opt/dba
+        
+---
+
+thor@jump_host ~/ansible$ ansible all -a "ls -ltr /opt/dba/" -i inventory
+      
