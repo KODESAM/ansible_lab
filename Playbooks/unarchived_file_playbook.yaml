@@ -1,0 +1,58 @@
+Unzip /usr/src/security/nautilus.zip archive in /opt/security/ location on all app servers.
+Make sure the extracted data must has the respective sudo user as their user and group owner,
+i.e tony for app server 1, steve for app server 2, banner for app server 3.
+The extracted data permissions must be 0744
+
+Note: Validation will try to run the playbook using command ansible-playbook -i inventory playbook.yml
+
+---
+
+-   name: 'unarchived file'
+    hosts: stapp01
+    become: yes
+    tasks:
+
+    -  name: unarchived file
+       unarchive:
+         src: /usr/src/security/nautilus.zip
+         dest: /opt/security/
+         owner: tony
+         group: tony
+         mode: 0744
+        
+-   name: 'unarchived file'
+    hosts: stapp02
+    become: yes
+    tasks:
+    -  name: unarchived file
+       unarchive:
+         src: /usr/src/security/nautilus.zip
+         dest: /opt/security/
+         owner: steve
+         group: steve
+         mode: 0744
+        
+-   name: 'unarchived file'
+    hosts: stapp03
+    become: yes
+    tasks:
+    -  name: unarchived file
+       unarchive:
+         src: /usr/src/security/nautilus.zip
+         dest: /opt/security/
+         owner: banner
+         group: banner
+         mode: 0744
+         
+  ---
+  thor@jump_host ~/ansible$ ansible all -a "ls -ltr /opt/security/" -i inventory
+stapp01 | CHANGED | rc=0 >>
+total 4
+drwxr--r-- 2 tony tony 4096 Sep 16 14:59 unarchive
+stapp03 | CHANGED | rc=0 >>
+total 4
+drwxr--r-- 2 banner banner 4096 Sep 16 14:59 unarchive
+stapp02 | CHANGED | rc=0 >>
+total 4
+drwxr--r-- 2 steve steve 4096 Sep 16 14:59 unarchive
+         
