@@ -25,7 +25,7 @@ vault_password_file = /home/thor/playbooks/secrets/vault.txt
 
 ---                                                                                                              
 - name: Ansbile Add User & Group                                                                       
-  hosts: stapp03                                                                                                
+  hosts: stapp01                                                                                               
   become: yes                                                                                                    
   tasks:                                                                                                         
   - name: Creating Admin Groups                                                                                  
@@ -41,13 +41,13 @@ vault_password_file = /home/thor/playbooks/secrets/vault.txt
   - name: Creating Admins Group Users                                                                            
     user:                                                                                                        
      name: "{{ item }}"                                                                                          
-     password: "{{ 'YchZHRcLkL' | password_hash ('sha512') }}"                                                   
+     password: "{{ '8FmzjvFU6S' | password_hash ('sha512') }}"                                                   
      groups: admins,wheel
      state: present                                                                                              
     loop:                                                                                                        
-    - rob                                                                                                        
-    - joy                                                                                                        
-    - david                                                                                                      
+    - rob                                                                                                                                                                                                               
+    - david  
+    - joy
   - name: Creating Developers Group Users                                                                        
     user:                                                                                                        
      name: "{{ item }}"                                                                                          
