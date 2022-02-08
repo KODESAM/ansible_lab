@@ -35,14 +35,16 @@ Note: Validation will try to run the playbook using command ansible-playbook -i 
         state: touch
         
         
-        ### verify####
-        ```
-        ansible all -a "ls -ltr /opt/itadmin/" -i inventory
         
-       ```
       when: inventory_hostname == "stapp03"
     - name: Link /opt/itadmin directory
       file:
         src: /opt/itadmin/
         dest: /var/www/html
         state: link
+
+### verify####
+      
+        ansible all -a "ls -ltr /opt/itadmin/" -i inventory
+        
+  
