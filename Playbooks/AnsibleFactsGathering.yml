@@ -51,3 +51,22 @@
        name: httpd
 
        state: restarted
+      
+  ----
+    
+    thor@jump_host ~/playbooks$ curl http://stapp01
+# BEGIN ANSIBLE MANAGED BLOCK
+
+Ansible managed node IP is 172.16.238.10
+# END ANSIBLE MANAGED BLOCK
+thor@jump_host ~/playbooks$ curl http://stapp02
+# BEGIN ANSIBLE MANAGED BLOCK
+
+Ansible managed node IP is 172.16.238.11
+# END ANSIBLE MANAGED BLOCK
+thor@jump_host ~/playbooks$ curl http://stapp03
+# BEGIN ANSIBLE MANAGED BLOCK
+
+Ansible managed node IP is 172.16.238.12
+# END ANSIBLE MANAGED BLOCK
+thor@jump_host ~/playbooks$ 
