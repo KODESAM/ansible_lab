@@ -1,0 +1,62 @@
+#!/bin/sh
+echo enter developers group password
+read developers_password
+echo enter admins group password
+read admins_password
+echo enter host to add user
+read targethost
+
+cat>user_info.txt<<EOF
+user_info:
+ - usergroup: developers
+   password: $developers_password
+ - usergroup: admins
+   password: $admins_password
+EOF
+
+ansible-vault encrypt --vault-password-file=~/playbooks/secrets/vault.txt --output=user_info user_info.txt
+
+cat>add_users.yml<<EOF
+- name: Ansbile Add User and Group
+  hosts: $targethost
+  become: no
+  vars_files:
+    - user_info
+    - data/users.yml
+  tasks:
+    - set_fact:
+        cred_admin: "{{ user_info | selectattr('usergroup', 'contains', 'admins') | list }}"
+        cred_developer: "{{ user_info | selectattr('usergroup', 'contains', 'developers') | list }}"
+    - name: Creating Admin Groups
+      group:
+        name: admins
+        state: present
+    - name: Creating Developers Groups
+      group:
+        name: developers
+        state: present
+    - name: Creating Admins Group Users
+      ansible.builtin.user:
+        name: '{{ item }}'
+        password: "{{ cred_admin[0].password | string | password_hash ('sha512') }}"
+        groups: admins,wheel
+        state: present
+      with_items: "{{ admins }}"
+    - name: Creating Developers Group Users
+      user:
+        name: '{{ item }}'
+        password: "{{ cred_developer[0].password | string | password_hash ('sha512') }}"
+        home: '/var/www/{{ item }}'
+        group: developers
+        state: present
+      with_items: "{{ developers }}"
+EOF
+
+cat >ansible.cfg<<EOF
+[defaults]
+vault_password_file = ~/playbooks/secrets/vault.txt
+[ssh_connection]
+ssh_args = -o StrictHostkeyChecking=no
+EOF
+
+ansible-playbook -i inventory add_users.yml
